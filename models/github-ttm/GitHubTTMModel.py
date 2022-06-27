@@ -1,5 +1,6 @@
 """Here goes the prediction code."""
 import os
+import logging
 import joblib
 import boto3
 from io import BytesIO
@@ -28,6 +29,9 @@ class GitHubTTMModel(object):
 
     def load_model_from_s3(self):
         """Load pretrained model from ceph s3 bucket."""
+        print("Starting to load model from s3...")
+        logging.info("Starting to load model from s3...")
+        logging.warn("Starting to load model from s3...")
         # init s3 client
         s3_resource = boto3.resource(
             "s3",
@@ -44,18 +48,35 @@ class GitHubTTMModel(object):
         )
         s3_object.download_fileobj(buffer)
 
+        print("Downloaded buffered obj from s3...")
+        logging.info("Downloaded buffered obj from s3...")
+        logging.warn("Downloaded buffered obj from s3...")
+
         # load from buffer
         model = joblib.load(buffer)
+
+        print("Deserialized model from buffer...")
+        logging.info("Deserialized model from buffer...")
+        logging.warn("Deserialized model from buffer...")
+
         return model
 
     def class_names(self) -> Iterable[str]:
         """Return names of output classes."""
+        print("Returning class names...")
+        logging.info("Returning class names...")
+        logging.warn("Returning class names...")
+
         return [f"Class_{i}" for i in range(10)]
 
     def transform_input(
         self, X: np.ndarray, names: Iterable[str], meta: Dict = None  # noqa: N803
     ) -> Union[np.ndarray, List, str, bytes]:
         """Preprocess input data."""
+        print("Transforming input...")
+        logging.info("Transforming input...")
+        logging.warn("Transforming input...")
+
         return X
 
     def predict(
@@ -87,7 +108,20 @@ class GitHubTTMModel(object):
         X : array-like
         feature_names : array of feature names (optional)
         """
+        print(f"Received data input of type {type(X)} and of length {len(X)}")
+        logging.info(f"Received data input of type {type(X)} and of length {len(X)}")
+        logging.warn(f"Received data input of type {type(X)} and of length {len(X)}")
+
+        print(f"Received features {features}")
+        logging.info(f"Received features {features}")
+        logging.warn(f"Received features {features}")
+
         # must convert to df first
         # TODO: move this to transform_input
         x_df = pd.DataFrame(data=X, columns=features_names)
+
+        logging.info("Converted to df...")
+        logging.warn("Converted to df...")
+        print("Converted to df...")
+
         return self.model.predict_proba(x_df)
