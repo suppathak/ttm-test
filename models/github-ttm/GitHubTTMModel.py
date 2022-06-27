@@ -113,8 +113,8 @@ class GitHubTTMModel(object):
         logging.warn(f"Received data input of type {type(X)} and of length {len(X)}")
 
         print(f"Received features {features_names}")
-        logging.info(f"Received features {features}")
-        logging.warn(f"Received features {features}")
+        logging.info(f"Received features {features_names}")
+        logging.warn(f"Received features {features_names}")
 
         # must convert to df first
         # TODO: move this to transform_input
