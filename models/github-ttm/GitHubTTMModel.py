@@ -112,7 +112,7 @@ class GitHubTTMModel(object):
         logging.info(f"Received data input of type {type(X)} and of length {len(X)}")
         logging.warn(f"Received data input of type {type(X)} and of length {len(X)}")
 
-        print(f"Received features {features}")
+        print(f"Received features {features_names}")
         logging.info(f"Received features {features}")
         logging.warn(f"Received features {features}")
 
