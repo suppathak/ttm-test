@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 
 
-class GitHubTTMModel_Workshop(object):
+class GitHubTTMModelWorkshop(object):
     """
     Model template.
 
